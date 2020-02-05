@@ -37,7 +37,7 @@ def classifyTriangle(a,b,c):
     
     # verify that all 3 inputs are integers  
     # Python's "isinstance(object,type) returns True if the object is of the specified type
-    if not(isinstance(a,int) and isinstance(b,int) and isinstance(c,int)):
+    if not(isinstance(a, int) and isinstance(b,int) and isinstance(c,int)):
         return 'InvalidInput';
       
     # This information was not in the requirements spec but 
@@ -52,7 +52,7 @@ def classifyTriangle(a,b,c):
         return 'Equilateral'
     elif ((a * 2) + (b * 2)) == (c * 2):
         return 'Right'
-    elif (a != b) and (b != c) and (a != b):
+    elif (a != b) and  (b != c) and (a != b):
         return 'Scalene'
     else:
         return 'Isoceles'

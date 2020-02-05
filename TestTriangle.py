@@ -9,29 +9,16 @@ The primary goal of this file is to demonstrate a simple unittest implementation
 
 import unittest
 
-from Triangle import classifyTriangle
+from Triangle_Fixed import classifyTriangle
 
-# This code implements the unit test functionality
-# https://docs.python.org/3/library/unittest.html has a nice description of the framework
 
 class TestTriangles(unittest.TestCase):
-    # define multiple sets of tests as functions with names that begin
-
-    def testRightTriangleA(self): 
-        self.assertEqual(classifyTriangle(3,4,5),'Right','3,4,5 is a Right triangle')
-
-    def testRightTriangleB(self): 
-        self.assertEqual(classifyTriangle(5,3,4),'Right','5,3,4 is a Right triangle')
-        
-    def testEquilateralTriangles(self): 
-        self.assertEqual(classifyTriangle(1,1,1),'Equilateral','1,1,1 should be equilateral')
-
+    # This class will test all the triangle specification and classify them as per their characteristics.
     def test_input(self):
         # This function will check whether all the data points are present in correct format or not
-        with self.assertRaises(ValueError):
-            classifyTriangle("Akshay", 1, 2)
-            classifyTriangle("a", "b", "c")
-            classifyTriangle("A", "B", "C")
+        self.assertEqual(classifyTriangle("Akshay", 1, 2), 'InvalidInput', '"Akshay", 1, 2 is an InvalidInput')
+        self.assertEqual(classifyTriangle("a", "b", "c"), 'InvalidInput', '"a", "b", "c", 1, 2 is an InvalidInput')
+        self.assertEqual(classifyTriangle("A", "B", "C"), 'InvalidInput', '"A", "B", "C", 1, 2 is an InvalidInput')
 
     def test_equilateral(self):
         # This function will tell us whether the triangle is equilateral triangle or not
@@ -45,6 +32,7 @@ class TestTriangles(unittest.TestCase):
         self.assertEqual(classifyTriangle(12, 13, 12), 'Isosceles', '12, 13, 12 is an isosceles triangle')
         self.assertEqual(classifyTriangle(10, 10, 8), 'Isosceles', '10, 10, 8 is an isosceles triangle')
         self.assertNotEqual(classifyTriangle(10, 10, 10), 'Isosceles', '10, 10, 10 should be Equilateral')
+        self.assertEqual(classifyTriangle(3, 3, 3.000000000000001), 'Isosceles')
 
     def test_scalene(self):
         # This function will tell us whether the triangle is scalene triangle or not
@@ -52,24 +40,27 @@ class TestTriangles(unittest.TestCase):
         self.assertNotEqual(classifyTriangle(10, 10, 3), 'Scalene', '10, 10, 3 is an isosceles triangle')
 
     def test_isosceles_right(self):
-        pass
         # This function will tell us whether the triangle is isosceles and right triangle or not
-        # self.assertEqual(classifyTriangle(2, 2, 2.828), 'Isosceles and Right Triangle',
-        # '2, 2, 2.828 is an isosceles and right triangle')
+        self.assertEqual(classifyTriangle(2, 2, 2.828), 'Right Isosceles',
+                         '2, 2, 2.828 is an isosceles and right triangle')
+        self.assertEqual(classifyTriangle(3, 3, 4.242640687119285146), 'Right Isosceles')
+        self.assertEqual(classifyTriangle(1, 1, 2 ** 0.5), 'Right Isosceles')
 
     def test_scalene_right(self):
         # This function will tell us whether the triangle is scalene and right triangle or not
-        self.assertEqual(classifyTriangle(3, 4, 5), 'Right and Scalene Triangle',
+        self.assertEqual(classifyTriangle(3, 4, 5), 'Right Scalene',
                          '3, 4, 5 is a scalene and right Triangle')
+        self.assertEqual(classifyTriangle(3, 5, 4), 'Right Scalene')
+
 
     def test_not_triangle(self):
         # This function will tell us whether this is triangle or not
-        # self.assertEqual(classifyTriangle(1, 1, 3), 'This is not a triangle', '1, 1, 3 is not a triangle')
-        self.assertEqual(classifyTriangle(15.5, 15.5, -15.5), 'This is not a triangle',
-                         '15.5, 15.5, -15.5 is not a triangle')
-        self.assertEqual(classifyTriangle(0, 0, 0), 'This is not a triangle', '0, 0, 0 is not a triangle')
+        self.assertEqual(classifyTriangle(1, 1, 3), 'NotATriangle', '1, 1, 3 is not a triangle')
+        self.assertEqual(classifyTriangle(15.5, 15.5, -15.5), 'InvalidInput',
+                         '15.5, 15.5, -15.5 is InvalidInput')
+        self.assertEqual(classifyTriangle(0, 0, 0), 'InvalidInput', '0, 0, 0 is InvalidInput')
+        self.assertEqual(classifyTriangle(3000, 3000, 4000), 'InvalidInput', '0, 0, 0 is InvalidInput')
+
 
 if __name__ == '__main__':
-    print('Running unit tests')
-    unittest.main()
-
+    unittest.main(exit=False, verbosity=2)
